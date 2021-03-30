@@ -27,18 +27,22 @@ actions+=/call_action_list,name=damage_trinkets,if=(covenant.necrolord|covenant.
 actions+=/call_action_list,name=damage_trinkets,if=!talent.phantom_singularity.enabled&(!variable.trinket_split|cooldown.summon_darkglare.remains>20|(variable.trinket_one&cooldown.summon_darkglare.remains<trinket.1.cooldown.remains)|(variable.trinket_two&cooldown.summon_darkglare.remains<trinket.2.cooldown.remains))
 # Burn soul shards if fight is almost over
 actions+=/malefic_rapture,if=time_to_die<execute_time*soul_shard&dot.unstable_affliction.ticking
+# Check if we should utilize Darkglare or hold it for Dark Soul
+actions+=/variable,name=use_darkglare,value=(time_to_die>cooldown.summon_darkglare.duration+20)^(time_to_die<cooldown.dark_soul.remains)|(buff.dark_soul.up)
 # If covenant dot/Phantom Singularity is running, use Darkglare to extend the current set
-actions+=/call_action_list,name=darkglare_prep,if=covenant.venthyr&dot.impending_catastrophe_dot.ticking&cooldown.summon_darkglare.remains<2&(dot.phantom_singularity.remains>2|!talent.phantom_singularity)
-actions+=/call_action_list,name=darkglare_prep,if=covenant.night_fae&dot.soul_rot.ticking&cooldown.summon_darkglare.remains<2&(dot.phantom_singularity.remains>2|!talent.phantom_singularity)
+actions+=/call_action_list,name=darkglare_prep,if=covenant.venthyr&dot.impending_catastrophe_dot.ticking&cooldown.summon_darkglare.remains<2&(dot.phantom_singularity.remains>2|!talent.phantom_singularity)&variable.use_darkglare
+actions+=/call_action_list,name=darkglare_prep,if=covenant.night_fae&dot.soul_rot.ticking&cooldown.summon_darkglare.remains<2&(dot.phantom_singularity.remains>2|!talent.phantom_singularity)&variable.use_darkglare
 # If using Phantom Singularity on cooldown, make sure to extend it before it runs out
-actions+=/call_action_list,name=darkglare_prep,if=(covenant.necrolord|covenant.kyrian|covenant.none)&dot.phantom_singularity.ticking&dot.phantom_singularity.remains<2
+actions+=/call_action_list,name=darkglare_prep,if=(covenant.necrolord|covenant.kyrian|covenant.none)&dot.phantom_singularity.ticking&dot.phantom_singularity.remains<2&variable.use_darkglare
 # Refresh dots early if going into a shard spending phase
 actions+=/call_action_list,name=dot_prep,if=covenant.night_fae&!dot.soul_rot.ticking&cooldown.soul_rot.remains<4
 actions+=/call_action_list,name=dot_prep,if=covenant.venthyr&!dot.impending_catastrophe_dot.ticking&cooldown.impending_catastrophe.remains<4
 actions+=/call_action_list,name=dot_prep,if=(covenant.necrolord|covenant.kyrian|covenant.none)&talent.phantom_singularity&!dot.phantom_singularity.ticking&cooldown.phantom_singularity.remains<4
+# Check if we should utilize Dark Soul or hold it for Darkglare
+actions+=/variable,name=use_darksoul,value=(time_to_die>cooldown.dark_soul.duration+20)|!(cooldown.summon_darkglare.remains<cooldown.dark_soul.duration&cooldown.summon_darkglare.remains>10)
 # If Phantom Singularity is ticking, it is safe to use Dark Soul
-actions+=/dark_soul,if=dot.phantom_singularity.ticking
-actions+=/dark_soul,if=!talent.phantom_singularity&(dot.soul_rot.ticking|dot.impending_catastrophe_dot.ticking)
+actions+=/dark_soul,if=dot.phantom_singularity.ticking&variable.use_darksoul
+actions+=/dark_soul,if=!talent.phantom_singularity&(dot.soul_rot.ticking|dot.impending_catastrophe_dot.ticking)&variable.use_darksoul
 # Sync Phantom Singularity with Venthyr/Night Fae covenant dot, otherwise use on cooldown. If Empyreal Ordnance buff is incoming, hold until it's ready (18 seconds after use)
 actions+=/phantom_singularity,if=covenant.night_fae&time>5&cooldown.soul_rot.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 actions+=/phantom_singularity,if=covenant.venthyr&time>5&cooldown.impending_catastrophe.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
