@@ -70,7 +70,7 @@ actions+=/dark_soul,if=!talent.phantom_singularity&cooldown.summon_darkglare.rem
 # Catch-all item usage for anything not specified elsewhere
 actions+=/call_action_list,name=item
 # Refresh Shadow Embrace before spending shards on Malefic Rapture
-actions+=/call_action_list,name=se,if=debuff.shadow_embrace.stack<(2-action.shadow_bolt.in_flight)|debuff.shadow_embrace.remains<3
+actions+=/call_action_list,name=se,if=talent.shadow_embrace&debuff.shadow_embrace.stack<(2-action.shadow_bolt.in_flight)|debuff.shadow_embrace.remains<3
 # Use Malefic Rapture when major dots are up, or if there will be significant time until the next Phantom Singularity
 actions+=/malefic_rapture,if=dot.vile_taint.ticking|dot.impending_catastrophe_dot.ticking|dot.soul_rot.ticking
 actions+=/malefic_rapture,if=talent.phantom_singularity&(dot.phantom_singularity.ticking|cooldown.phantom_singularity.remains>25|time_to_die<cooldown.phantom_singularity.remains)
