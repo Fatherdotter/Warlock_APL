@@ -4,6 +4,8 @@ actions.precombat+=/food
 actions.precombat+=/augmentation
 actions.precombat+=/summon_pet
 actions.precombat+=/grimoire_of_sacrifice,if=talent.grimoire_of_sacrifice.enabled
+actions.precombat+=/use_item,name=tome_of_monstrous_constructions
+actions.precombat+=/use_item,name=soleahs_secret_technique
 actions.precombat+=/snapshot_stats
 actions.precombat+=/seed_of_corruption,if=spell_targets.seed_of_corruption_aoe>=3
 actions.precombat+=/haunt
@@ -69,7 +71,7 @@ actions+=/call_action_list,name=se,if=talent.shadow_embrace&(debuff.shadow_embra
 actions+=/malefic_rapture,if=(dot.vile_taint.ticking|dot.impending_catastrophe_dot.ticking|dot.soul_rot.ticking)&(!runeforge.malefic_wrath|buff.malefic_wrath.stack<3|soul_shard>1)
 # Use Malefic Rapture to maintain the malefic wrath buff until shards need to be generated for the next burst window (20 seconds is more than sufficient to generate 3 shards)
 actions+=/malefic_rapture,if=runeforge.malefic_wrath&cooldown.soul_rot.remains>20&buff.malefic_wrath.remains<4
-# Use Malefic Rapture on phantom singularity casts, making sure to save a shard or stack malefic wrath if using it
+# Use Malefic Rapture on phantom singularity casts, making sure to save a shard to stack malefic wrath if using it
 actions+=/malefic_rapture,if=talent.phantom_singularity&(dot.phantom_singularity.ticking|cooldown.phantom_singularity.remains>25|time_to_die<cooldown.phantom_singularity.remains)&(!runeforge.malefic_wrath|buff.malefic_wrath.stack<3|soul_shard>1)
 actions+=/malefic_rapture,if=talent.sow_the_seeds
 # Drain Life is only a DPS gain with Inevitable Demise near max stacks. If fight is about to end do not miss spending the stacks
@@ -123,6 +125,8 @@ actions.covenant+=/scouring_tithe
 actions.damage_trinkets=use_item,name=soul_igniter
 actions.damage_trinkets+=/use_item,name=dreadfire_vessel
 actions.damage_trinkets+=/use_item,name=glyph_of_assimilation
+actions.damage_trinkets+=/use_item,name=unchained_gladiators_shackles
+actions.damage_trinkets+=/use_item,name=ebonsoul_vise
 
 actions.darkglare_prep=vile_taint
 actions.darkglare_prep+=/dark_soul
@@ -136,6 +140,7 @@ actions.darkglare_prep+=/summon_darkglare
 actions.delayed_trinkets=use_item,name=empyreal_ordnance,if=(covenant.night_fae&cooldown.soul_rot.remains<20)|(covenant.venthyr&cooldown.impending_catastrophe.remains<20)|(covenant.necrolord|covenant.kyrian|covenant.none)
 actions.delayed_trinkets+=/use_item,name=sunblood_amethyst,if=(covenant.night_fae&cooldown.soul_rot.remains<6)|(covenant.venthyr&cooldown.impending_catastrophe.remains<6)|(covenant.necrolord|covenant.kyrian|covenant.none)
 actions.delayed_trinkets+=/use_item,name=soulletting_ruby,if=(covenant.night_fae&cooldown.soul_rot.remains<8)|(covenant.venthyr&cooldown.impending_catastrophe.remains<8)|(covenant.necrolord|covenant.kyrian|covenant.none)
+actions.delayed_trinkets+=/use_item,name=shadowed_orb_of_torment,if=(covenant.night_fae&cooldown.soul_rot.remains<4)|(covenant.venthyr&cooldown.impending_catastrophe.remains<4)|(covenant.necrolord|covenant.kyrian|covenant.none)
 
 actions.dot_prep=agony,if=dot.agony.remains<8&cooldown.summon_darkglare.remains>dot.agony.remains
 actions.dot_prep+=/siphon_life,if=dot.siphon_life.remains<8&cooldown.summon_darkglare.remains>dot.siphon_life.remains
@@ -145,7 +150,7 @@ actions.dot_prep+=/corruption,if=dot.corruption.remains<8&cooldown.summon_darkgl
 actions.item=use_items
 
 actions.se=haunt
-actions.se+=/drain_soul,interrupt_global=1,interrupt_if=debuff.shadow_embrace.stack>=3
+actions.se+=/drain_soul,interrupt=1,interrupt_if=debuff.shadow_embrace.stack>=3
 actions.se+=/shadow_bolt
 
 actions.stat_trinkets=use_item,name=inscrutable_quantum_device
