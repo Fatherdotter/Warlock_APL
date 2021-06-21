@@ -145,7 +145,7 @@ actions.dot_prep+=/corruption,if=dot.corruption.remains<8&cooldown.summon_darkgl
 actions.item=use_items
 
 actions.se=haunt
-actions.se+=/drain_soul,interrupt=1,interrupt_if=debuff.shadow_embrace.stack<3
+actions.se+=/drain_soul,interrupt_global=1,interrupt_if=debuff.shadow_embrace.stack>=3
 actions.se+=/shadow_bolt
 
 actions.stat_trinkets=use_item,name=inscrutable_quantum_device
