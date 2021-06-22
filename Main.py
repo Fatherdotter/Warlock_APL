@@ -39,7 +39,7 @@ actions+=/dark_soul,if=!talent.phantom_singularity&(dot.soul_rot.ticking|dot.imp
 actions+=/phantom_singularity,if=covenant.night_fae&time>5&cooldown.soul_rot.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 actions+=/phantom_singularity,if=covenant.venthyr&time>5&cooldown.impending_catastrophe.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 # Necrolord with Malefic Wrath casts phantom singularity in line with Decimating Bolt
-actions+=/phantom_singularity,if=covenant.necrolord&time>5&cooldown.decimating_bolt.remains<3&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
+actions+=/phantom_singularity,if=covenant.necrolord&runeforge.malefic_wrath&time>5&cooldown.decimating_bolt.remains<3&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 # Other covenants (including non-MW Necro) cast phantom singularity on CD
 actions+=/phantom_singularity,if=(covenant.kyrian|covenant.none|(covenant.necrolord&!runeforge.malefic_wrath))&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 actions+=/phantom_singularity,if=time_to_die<16
