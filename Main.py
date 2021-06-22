@@ -38,7 +38,10 @@ actions+=/dark_soul,if=!talent.phantom_singularity&(dot.soul_rot.ticking|dot.imp
 # Sync Phantom Singularity with Venthyr/Night Fae covenant dot, otherwise use on cooldown. If Empyreal Ordnance buff is incoming, hold until it's ready (18 seconds after use)
 actions+=/phantom_singularity,if=covenant.night_fae&time>5&cooldown.soul_rot.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 actions+=/phantom_singularity,if=covenant.venthyr&time>5&cooldown.impending_catastrophe.remains<1&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
-actions+=/phantom_singularity,if=(covenant.necrolord|covenant.kyrian|covenant.none)&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
+# Necrolord with Malefic Wrath casts phantom singularity in line with Decimating Bolt
+actions+=/phantom_singularity,if=covenant.necrolord&time>5&cooldown.decimating_bolt.remains<3&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
+# Other covenants (including non-MW Necro) cast phantom singularity on CD
+actions+=/phantom_singularity,if=(covenant.kyrian|covenant.none|(covenant.necrolord&!runeforge.malefic_wrath))&(trinket.empyreal_ordnance.cooldown.remains<162|!equipped.empyreal_ordnance)
 actions+=/phantom_singularity,if=time_to_die<16
 # If Phantom Singularity is ticking, it's time to use other major dots
 actions+=/call_action_list,name=covenant,if=dot.phantom_singularity.ticking&(covenant.night_fae|covenant.venthyr)
@@ -71,6 +74,8 @@ actions+=/call_action_list,name=se,if=talent.shadow_embrace&(debuff.shadow_embra
 actions+=/malefic_rapture,if=(dot.vile_taint.ticking|dot.impending_catastrophe_dot.ticking|dot.soul_rot.ticking)&(!runeforge.malefic_wrath|buff.malefic_wrath.stack<3|soul_shard>1)
 # Use Malefic Rapture to maintain the malefic wrath buff until shards need to be generated for the next burst window (20 seconds is more than sufficient to generate 3 shards)
 actions+=/malefic_rapture,if=runeforge.malefic_wrath&cooldown.soul_rot.remains>20&buff.malefic_wrath.remains<4
+# Maintain Malefic Wrath at all times for the necrolord covenant
+actions+=/malefic_rapture,if=runeforge.malefic_wrath&covenant.necrolord&buff.malefic_wrath.remains<4
 # Use Malefic Rapture on phantom singularity casts, making sure to save a shard to stack malefic wrath if using it
 actions+=/malefic_rapture,if=talent.phantom_singularity&(dot.phantom_singularity.ticking|cooldown.phantom_singularity.remains>25|time_to_die<cooldown.phantom_singularity.remains)&(!runeforge.malefic_wrath|buff.malefic_wrath.stack<3|soul_shard>1)
 actions+=/malefic_rapture,if=talent.sow_the_seeds
